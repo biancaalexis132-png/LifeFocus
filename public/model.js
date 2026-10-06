@@ -1,0 +1,3 @@
+export function nextWeight(weight,reps,target=10,step=5){return reps>=target?Math.round((weight+step)*100)/100:weight;}
+export function aggregateIngredients(meals,recipes){const result={};for(const meal of meals)for(const [name,amount,unit] of recipes[meal].ingredients){const key=name+'|'+unit;result[key]??={name,amount:0,unit};result[key].amount+=amount;}return Object.values(result);}
+export function weekDays(month,week){const [y,m]=month.split('-').map(Number);const last=new Date(y,m,0).getDate();return Array.from({length:Math.min(7,last-week*7)},(_,i)=>`${month}-${String(week*7+i+1).padStart(2,'0')}`);}
