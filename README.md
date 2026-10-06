@@ -21,7 +21,7 @@ Browser storage is specific to the site's origin: measurements entered on the lo
 ## Using your planner
 
 - Choose Workout plan or Meal plan, select a week, then a day.
-- Workout days contain a sample three-set routine. Log the weight and reps for your final completed set. Reaching 10 reps suggests the configured increment on the next exercise occurrence; otherwise the weight stays the same. This simple rule does not evaluate form, fatigue, or all sets.
+- Workout days contain a sample three-set routine. Use one working weight, record reps for each of the three sets, and choose whether you had 0–1 or 2+ reps left. The next occurrence of that exercise uses the most recent earlier session, even across months. All three sets at 10+ reps with 2+ reps left suggests the configured increment. Otherwise repeat the weight and build reps. Two consecutive sessions at the same weight with a set below 8 reps suggest reducing by the larger of 5% or one increment. Old single-set logs remain visible but cannot trigger an increase. Future unlogged sessions never compound projected increases. Suggestions are estimates; adjust to available equipment and comfortable form.
 - Edit each day's meals using the recipe selector. The grocery list totals ingredients for all meals in the chosen week, at one serving each.
 - Log body weight from Overview or My progress. My progress shows body weight and individual exercise trends.
 - Settings controls pounds/kilograms, the overload increment, and JSON data export.
