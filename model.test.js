@@ -19,6 +19,13 @@ test('two low-rep sessions suggest a reduction; one low session or changed loads
  assert.equal(progression([{...low,weight:95},low],65).action,'Hold');
  assert.equal(progression([{...low,weight:2},{...low,weight:2}],65,5).weight,0);
 });
+test('replacement exercises use their own set count and rep range',()=>{
+ const routine={sets:2,minReps:10,maxReps:12};
+ assert.equal(progression([{weight:30,setReps:[12,12],effort:'comfortable'}],20,2.5,routine).weight,32.5);
+ assert.equal(progression([{weight:30,setReps:[12,11],effort:'comfortable'}],20,2.5,routine).weight,30);
+ assert.equal(progression([{weight:30,setReps:[12,12,12],effort:'comfortable'}],20,2.5,routine).action,'Hold');
+ assert.equal(progression([],20,2.5,routine).weight,20);
+});
 test('grocery list combines all planned servings without mixing units',()=>{assert.deepEqual(aggregateIngredients(['a','a','b'],{a:{ingredients:[['Rice',60,'g']]},b:{ingredients:[['Rice',40,'g'],['Lemon',0.5,'each']]}}),[{name:'Rice',amount:160,unit:'g'},{name:'Lemon',amount:0.5,unit:'each'}]);});
 test('month weeks respect month boundaries and leap years',()=>{assert.equal(weekDays('2026-02',3).at(-1),'2026-02-28');assert.deepEqual(weekDays('2024-02',4),['2024-02-29']);assert.equal(weekDays('2026-10',4).length,3);});
 test('PDF plan preserves supplied days, snacks, and known missing details',()=>{assert.equal(schedule.length,25);for(const day of schedule){assert.equal(day.length,5);for(const code of day)assert.ok(recipes[code]);}assert.deepEqual(schedule[0],['B1','L1','D1','S1','S2']);assert.equal(recipes.D7.ingredients.length,0);assert.ok(recipes.D4.note.includes('cut off'));assert.equal(recipes.B1.ingredients[0][1],250);});
