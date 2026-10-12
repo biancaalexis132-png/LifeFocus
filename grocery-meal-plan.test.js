@@ -19,3 +19,12 @@ test('grocery update preserves history, eaten meals and later customizations',()
  assert.equal(state.plans['2026-10-10'][0],'B2');assert.equal(state.plans['2026-10-10'][1],'G_AHI_RICE');
  state.plans['2026-10-11']=['custom'];assert.equal(applyGroceryPlan(state,'2026-10-10'),false);assert.deepEqual(state.plans['2026-10-11'],['custom']);
 });
+
+test('meal instructions only describe ingredients used by the selected meal',()=>{
+ assert.match(recipes.G_SALMON_POTATO.steps.join(' '),/300 g raw sweet potatoes/);
+ assert.doesNotMatch(recipes.G_SALMON_POTATO.steps.join(' '),/rice|seaweed/);
+ assert.doesNotMatch(recipes.G_YOGURT_GRANOLA.steps.join(' '),/eggs|oatmeal|fruit/);
+ assert.doesNotMatch(recipes.G_OAT_SHAKE.steps.join(' '),/fruit|mandarin/);
+ assert.match(recipes.G_TUNA_PASTA.steps.join(' '),/Drain one can/);
+ assert.doesNotMatch(recipes.G_TUNA_PASTA.steps.join(' '),/fresh fish|shrimp|cheese/);
+});
