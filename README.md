@@ -41,3 +41,9 @@ The workout routine is an editable-in-source sample. Meals are transcribed from 
 This dated pescatarian plan uses the supplied Aldi groceries and existing eggs, tuna, apples, mandarins and protein powder. It uses sweet potatoes from the receipt, three 4 oz salmon servings, three 4 oz shrimp servings and two 4 oz ahi servings. Household meats and whole milk are excluded. Recipes include measured ingredients and cooking steps; checked-off meals contribute their estimated protein. Optional add-ons are excluded from base calorie/protein estimates and shopping quantities. The listed base portions often fall short of the requested 1,750–1,850 kcal / 120–130 g protein targets; the app displays estimated totals instead of presenting those targets as achieved.
 
 The update applies once per browser/synced state to upcoming dates in this week. Already eaten meals and historical dates are preserved; future edits remain editable. Other dates keep their existing plans.
+
+## At-home update: November 3–9, 2026
+
+Adds a dated week using bagels, capers, garden veggie cream cheese, Beyond burger and ground meat, eggs, plain and vanilla Greek yogurt, vegan wings, Omni vegan spam, shrimp, salmon, Impossible breakfast sausage, oatmeal, Cheerios, almond milk, apples, sweet potatoes, salad greens and bell peppers. Recipes contain measured portions, cooking instructions and typical-label nutrition estimates. Dairy milk can replace almond milk using its own label. No stock quantities were provided, so weekly totals are requirements to check against supplies rather than a claim that supplies cover the week.
+
+The new version applies once to upcoming dates, preserving past days, checked-off meals, previous recipe IDs and subsequent edits. Existing calorie goals remain unchanged; estimated portions are adjustable. The older October plan remains available with its original note.
