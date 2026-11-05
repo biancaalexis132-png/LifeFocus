@@ -1,0 +1,44 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+const RealDate=globalThis.Date;
+globalThis.Date=class extends RealDate{constructor(...args){super(...(args.length?args:['2026-11-05T12:00:00']));}};
+test('PDF meals, household dinners and cross-month master groceries render separately',async()=>{
+ const events={},storage=new Map(),els=new Map();
+ const element=key=>{if(!els.has(key))els.set(key,{innerHTML:'',textContent:'',dataset:{},classList:{toggle(){},add(){},remove(){}},setAttribute(){},open:false,close(){this.open=false;},showModal(){this.open=true;},focus(){}});return els.get(key);};
+ globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)};
+ globalThis.document={querySelector:element,querySelectorAll:()=>[],documentElement:element('root'),body:element('body'),addEventListener:(name,fn)=>events[name]=fn};
+ globalThis.matchMedia=()=>({matches:false,addEventListener(){}});
+ globalThis.addEventListener=()=>{};globalThis.scrollTo=()=>{};
+ const NativeFormData=globalThis.FormData;globalThis.FormData=class{constructor(f){this.values=f.values||{};}get(k){return this.values[k]??null;}getAll(k){return this.values[k]||[];}};
+ const d=new Date(),date=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ const click=dataset=>events.click({target:{closest:()=>({dataset})}});
+ const submit=(id,values,dataset={})=>events.submit({preventDefault(){},target:{id,values,dataset}});
+ const saved=()=>JSON.parse(storage.get('lifefocus-v1'));
+ try{
+  await import('./public/app.js');
+  click({action:'week',week:'0',kind:'meals'});
+  click({action:'day',date:'2026-11-05'});
+  assert.match(element('#app').innerHTML,/Smoked salmon bagel/);
+  assert.match(element('#app').innerHTML,/1949 kcal/);
+  assert.match(element('#app').innerHTML,/Khris’s dinner/);
+  click({action:'edit-meals'});
+  assert.doesNotMatch(element('#dialog').innerHTML,/Beef cheeseburger/);
+  assert.match(element('#dialog').innerHTML,/Vegan wings/);
+  click({page:'grocery'});
+  assert.match(element('#app').innerHTML,/Guide week 1 shopping list/);
+  assert.match(element('#app').innerHTML,/35 personal meals & snacks · 0 Khris dinners/);
+  assert.doesNotMatch(element('#app').innerHTML,/Ground beef — Khris/);
+  click({action:'grocery-household'});
+  assert.match(element('#app').innerHTML,/Ground beef — Khris/);
+  assert.match(element('#app').innerHTML,/7 Khris dinners/);
+  assert.equal(saved().includeKhrisGroceries,true);
+  click({action:'grocery-range',range:'guide-3'});
+  assert.match(element('#app').innerHTML,/Nov 26 – Dec 2/);
+  click({action:'grocery-range',range:'master'});
+  assert.match(element('#app').innerHTML,/30-day master grocery list/);
+  assert.match(element('#app').innerHTML,/150 personal meals & snacks · 30 Khris dinners/);
+  click({action:'grocery-range',range:'guide-4'});
+  assert.match(element('#app').innerHTML,/10 personal meals & snacks · 2 Khris dinners/);
+  assert.match(element('#app').innerHTML,/Check pantry/);
+ }finally{globalThis.FormData=NativeFormData;}
+});
