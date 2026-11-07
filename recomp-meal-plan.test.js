@@ -42,3 +42,14 @@ test('PDF migration upgrades prior plans without losing history, eaten slots, go
  state.plans['2026-11-06']=['H_BURGER'];
  assert.equal(applyGroceryPlan(state,'2026-11-05'),false);assert.deepEqual(state.plans['2026-11-06'],['H_BURGER']);
 });
+
+test('optional low-appetite swaps are available without replacing the 30-day PDF guide',()=>{
+ assert.equal(recompRecipes.LF_CLEAR_WHEY.protein,22);
+ assert.equal(recompRecipes.LF_CLEAR_WHEY.cal,100);
+ assert.equal(recompRecipes.LF_MILK_GRANOLA.cal,300);
+ assert.equal(recompRecipes.LF_SMALL_YOGURT.household,false);
+ assert.equal(recompRecipes.LF_SHRIMP_RICE_MINI.ingredients[0][0],'Shrimp (raw, peeled)');
+ assert.match(noteForDate('2026-11-07'),/lower-appetite/);
+ assert.equal(pantryStatus('Whole milk'),'Check pantry / refill');
+ assert.equal(recompPlan['2026-11-07'][0],'R30_12');
+});
