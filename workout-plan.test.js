@@ -25,3 +25,12 @@ test('each session has warmup and cooldown, and all supplied exercises have dire
  assert.equal(sessions.Wednesday.items.find(e=>e.name==='Lat pulldown').sets,2);
  assert.equal(sessions.Sunday.items.find(e=>e.name==='Lat pulldown').sets,3);
 });
+
+test('morning options preserve hip thrusts and clarify dumbbell loading',()=>{
+ for(const day of ['Tuesday','Wednesday','Friday'])assert.match(sessions[day].timing,/35 minutes/);
+ assert.match(sessions.Friday.note,/PER HAND/);
+ assert.equal(sessions.Friday.items.find(e=>e.name==='Dumbbell Romanian deadlift').weight,10);
+ assert.ok(sessions.Tuesday.items.some(e=>e.name==='Smith hip thrust'));
+ assert.ok(sessions.Sunday.items.some(e=>e.name==='Smith hip thrust'));
+ assert.match(sessions.Sunday.note,/optional/i);
+});
