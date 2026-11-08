@@ -6,8 +6,8 @@ export function parseDailyNutritionLine(input){
  if(!line)throw new Error('Paste a daily summary first.');
  const values=line.split(/[|,]/).map(s=>s.trim());
  if(values.length<5||values.length>7)throw new Error('Use: date | calories | protein | carbs | fat | fiber (optional) | sugar (optional).');
- const date=values.shift();
- if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date)throw new Error('Start with a valid YYYY-MM-DD date.');
+ const date=values.shift(),calendarDate=new Date(date+'T12:00:00Z');
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(calendarDate.getTime())||calendarDate.toISOString().slice(0,10)!==date)throw new Error('Start with a valid YYYY-MM-DD date.');
  const labels=['calories','protein','carbs','fat','fiber','sugar'];
  const limits=[20000,1000,2000,1000,300,500];
  const totals={};
