@@ -142,3 +142,6 @@ body[data-sync=syncing] .status-dot{animation:pulse 1s infinite alternate}
  .week-nav .secondary{padding:8px 10px}
  .mood label{padding:7px 9px}
 }
+
+/* Pasted daily nutrition totals are private to the user's own LifeFocus state. */
+#import-totals-form textarea{width:100%;min-height:88px}#import-totals-form .import-complete{display:flex;align-items:flex-start;gap:10px;line-height:1.45}#import-totals-form .import-complete input{flex:0 0 auto;margin-top:2px}
