@@ -86,7 +86,7 @@ function totalsFor(d){return dayLog(d).totals||null;}
 function proteinFor(d){const t=totalsFor(d);return t&&Number.isFinite(t.protein)?t.protein:proteinFromMeals(d)+(Number(dayLog(d).protein)||0);}
 function calRange(){const {calMin,calMax}=state.goals;return calMin||calMax?[calMin||0,calMax||Infinity]:null;}
 function rangeText(){const {calMin,calMax}=state.goals;return calMin&&calMax?`${calMin.toLocaleString()}–${calMax.toLocaleString()} kcal`:calMin?`${calMin.toLocaleString()}+ kcal`:calMax?`under ${calMax.toLocaleString()} kcal`:'';}
-function calStatus(d){const r=calRange(),t=totalsFor(d);if(!r||!t||!Number.isFinite(t.calories))return null;return t.calories<r[0]?'under':t.calories>r[1]?'over':'in';}
+function calStatus(d){const r=calRange(),t=totalsFor(d);if(!r||!t||t.completeness==='partial'||!Number.isFinite(t.calories))return null;return t.calories<r[0]?'under':t.calories>r[1]?'over':'in';}
 function calHit(d){return calStatus(d)==='in';}
 const statusLabel={in:'✓ In range',under:'Below range',over:'Above range'};
 function macroLine(t){const parts=[['Protein',t.protein,4],['Carbs',t.carbs,4],['Fat',t.fat,9]].filter(([,g])=>Number.isFinite(g)),kcal=parts.reduce((n,[,g,f])=>n+g*f,0);return parts.map(([l,g,f])=>`<span class="macro"><strong>${g} g</strong> ${l}${kcal?` · ${Math.round(g*f/kcal*100)}%`:''}</span>`).join('')+(Number.isFinite(t.fiber)?`<span class="macro"><strong>${t.fiber} g</strong> Fiber</span>`:'');}
